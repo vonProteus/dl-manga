@@ -1,10 +1,10 @@
 #!/bin/bash -e
 
-COOKIEJAR=$(mktemp -t cookiejar)
-SITETMP=$(mktemp -t sitetmp)
+COOKIEJAR=$(mktemp)
+SITETMP=$(mktemp)
 
 alias wget="wget --quiet --load-cookies $COOKIEJAR --save-cookies $COOKIEJAR"
-
+alias xml=xmlstarlet
 
 MANGACOUNT=$(xml select -t -v "count(/config/manga)" $CONFIG_FILE)
 
@@ -23,7 +23,7 @@ do
             LASTURL=$(dl-manga.sh $NEXTMANGAURL)
                     
             xml ed --inplace -u "/config/manga[$MANGAID]/lastURL" --value "$LASTURL" $CONFIG_FILE
-            xml ed --inplace -u "/config/manga[$MANGAID]/date" --value "$(date)" $CONFIG_FILE
+            xml ed --inplace -u "/config/manga[$MANGAID]/date" --value "$(date -Iseconds)" $CONFIG_FILE
         fi
         
     popd
