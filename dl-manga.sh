@@ -3,14 +3,14 @@
 BASEURL=$1
 
 COOKIEJAR=$(mktemp -t cookiejar)
-BINWGET="wget --quiet --load-cookies $COOKIEJAR --save-cookies $COOKIEJAR"
+alias wget="wget --quiet --load-cookies $COOKIEJAR --save-cookies $COOKIEJAR"
 
 
 function DLCHAPTER {
     CHAPTERURL=$1
     SITETMP=$(mktemp -t sitetmp)
 
-    ${BINWGET} -O $SITETMP $CHAPTERURL
+    wget -O $SITETMP $CHAPTERURL
 
     CHAPTERNAME=$(xmllint --html -xpath "string(//select[contains(@class, 'navi-change-chapter')]/option[@selected]/text())" $SITETMP | sed 's/\W/_/g')
     PANELURLS=$(xmllint --html -xpath "//div[contains(@class, 'container-chapter-reader')]/img/@src" $SITETMP | tr " " "\n" | awk -F '"' '{print $2}')
@@ -22,7 +22,7 @@ function DLCHAPTER {
         #echo "$CHAPTERNAME - ${PANELURL##*/}"
         PANELNAME="$CHAPTERNAME - ${PANELURL##*/}" 
         
-        ${BINWGET} --referer=$CHAPTERURL -O "$PANELNAME" "$PANELURL"
+        wget --referer=$CHAPTERURL -O "$PANELNAME" "$PANELURL"
         
         zip -rq "$FILENAMECBZ" "$PANELNAME"
         rm "$PANELNAME"
@@ -34,7 +34,10 @@ function DLCHAPTER {
 }
 
 
-time while [ -n "$BASEURL" ]
+while [ -n "$BASEURL" ]
 do
+    LASTURL=$BASEURL
     BASEURL=$(DLCHAPTER $BASEURL)
 done 
+
+echo $LASTURL
