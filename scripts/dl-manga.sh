@@ -4,7 +4,6 @@ BASEURL=$1
 
 COOKIEJAR=$(mktemp)
 alias wget="wget --quiet --load-cookies $COOKIEJAR --save-cookies $COOKIEJAR"
-alias xml=xmlstarlet
 
 function DLCHAPTER {
     CHAPTERURL=$1

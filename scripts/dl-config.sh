@@ -4,7 +4,6 @@ COOKIEJAR=$(mktemp)
 SITETMP=$(mktemp)
 
 alias wget="wget --quiet --load-cookies $COOKIEJAR --save-cookies $COOKIEJAR"
-alias xml=xmlstarlet
 
 MANGACOUNT=$(xml select -t -v "count(/config/manga)" $CONFIG_FILE)
 
