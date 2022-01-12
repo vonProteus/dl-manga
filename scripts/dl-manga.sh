@@ -18,7 +18,7 @@ function DLCHAPTER {
     
     for PANELURL in $PANELURLS
     do
-        PANELNAME=$(echo "$CHAPTERNAME   ${PANELURL##*/}" | sed 's/\W/_/g')
+        PANELNAME="$CHAPTERNAME - ${PANELURL##*/}"
         
         wget --referer=$CHAPTERURL -O "$PANELNAME" "$PANELURL"
         
