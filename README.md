@@ -16,7 +16,7 @@ Downloaded fils will be in `$(pwd)/manga`
 
 This command will download all chapters starting with 178 to `$(pwd)/manga/Solo Leveling` and add to config this manga. Config is saved in `$(pwd)/config/config.xml` you can add multiple manga to config one after another
 
-###download from config
+### download from config
 
 `docker run --rm -ti -v "$(pwd)/manga":/manga -v "$(pwd)/config":/config vonproteus/dl-manga`
 
